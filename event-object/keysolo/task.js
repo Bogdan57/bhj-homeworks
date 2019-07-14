@@ -17,6 +17,16 @@ class Game {
   }
 
   registerEvents() {
+    document.addEventListener('keypress', event => {
+      const pressedKey = event.key.toLowerCase().charCodeAt(0);
+      const screenSymbol = this.currentSymbol.textContent.toLowerCase().charCodeAt(0);
+      if (pressedKey === screenSymbol) {
+          this.success();
+      } else {
+          this.fail();
+      }
+
+  });
     /*
       TODO:
       Написать обработчик события, который откликается
