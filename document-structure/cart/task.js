@@ -42,7 +42,7 @@ function addToCart(event) {
             let total = +productCount.innerText;
             productCount.innerText = total + countFromProduct;
 
-            return false;
+            return;
         }
     }
 
