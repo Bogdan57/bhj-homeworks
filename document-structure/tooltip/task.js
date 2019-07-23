@@ -1,17 +1,16 @@
-const has_tooltip = document.querySelectorAll('.has-tooltip');
-const tooltip = document.querySelector('.tooltip');
+const tooltip = document.createElement('div');
+tooltip.setAttribute('class', 'tooltip');
+document.body.appendChild(tooltip);
 
-function showTip(event) {
+document.body.addEventListener('click', (event) => {
+	let target = event.target;
+	if (target.className != 'has-tooltip') return;
 	event.preventDefault();
-	const title = event.target.getAttribute('title');
-	const top = event.target.getBoundingClientRect().top;
-	const left = event.target.getBoundingClientRect().left;
-	tooltip.textContent = title;
-	tooltip.style.display = 'block';
-	tooltip.style.top = `${top + 20}px`;
-	tooltip.style.left = `${left}px`;
-}
-
-for(let item of has_tooltip) {
-	item.addEventListener('click', showTip);
-}
+	tooltip.innerText = target.getAttribute('title');
+	tooltip.style.top = target.getBoundingClientRect().top.toString() + 'px';
+	tooltip.style.left = target.getBoundingClientRect().left.toString() + 'px';
+	tooltip.classList.toggle('tooltip_active');
+	target.addEventListener('blur', () => {
+		tooltip.classList.remove('tooltip_active');
+	});
+});

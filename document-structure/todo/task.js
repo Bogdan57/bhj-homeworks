@@ -1,40 +1,25 @@
-const taskList = document.querySelector('.tasks__list');
-const button = document.querySelector('.tasks__add');
-const input = document.querySelector('.tasks__input');
+const tasks = document.getElementById('tasks');
+const tasksList = document.getElementById('tasks__list');
 
-button.addEventListener('click', addTask);
+tasks.addEventListener('keydown', function(event) {
+	let task = document.getElementById('task__input').value;
+	if (event.key === 'Enter') {
+		event.preventDefault();
+		tasksList.insertAdjacentHTML('afterBegin',
+			`<div class="task">
+				<div class="task__title">
+					${task}
+				</div>
+				<a href="#" class="task__remove">&times;</a>
+			</div>`);
+		document.getElementById('task__input').value = "";
 
-function addTask(event) {
-	event.preventDefault();
-	const value = input.value;
-	if(value != '') {
-		item(value);
-		input.value = '';
+		const removeTask = Array.from( document.querySelectorAll('.task__remove') );
+		removeTask.forEach( function(item) {
+			item.addEventListener('click', function(event) {
+				event.preventDefault();
+				item.closest('div').remove();
+			});
+		}); 
 	}
-	deleteTask();
-}
-
-
-function deleteTask(){
-	const pressDelete = document.querySelectorAll('.task__remove');
-	for(let item of pressDelete) {
-		item.addEventListener('click', (event) => {
-			event.preventDefault();
-			const parent = event.target.parentNode;
-			parent.style.display = 'none';
-		});
-	}
-}
-
-
-
-function item(text) {
-	taskList.innerHTML += `<div class="task">
-				              <div class="task__title">
-				                ${text}
-				              </div>
-				              <a href="#" class="task__remove">&times;</a>
-				            </div>`;
-
-	deleteTask();
-}
+});
