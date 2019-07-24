@@ -7,9 +7,9 @@ document.body.addEventListener('click', (event) => {
 	if (target.className != 'has-tooltip') return;
 	event.preventDefault();
 	tooltip.innerText = target.getAttribute('title');
-	tooltip.style.top = target.getBoundingClientRect().top.toString() + 'px';
 	tooltip.style.left = target.getBoundingClientRect().left.toString() + 'px';
 	tooltip.classList.toggle('tooltip_active');
+	tooltip.style.top = `${top + 20}px`;
 	target.addEventListener('blur', () => {
 		tooltip.classList.remove('tooltip_active');
 	});
